@@ -1,0 +1,23 @@
+import { StyleSheet, View, Text, SafeAreaView, Platform } from 'react-native';
+const Favorites = ({ navigation }) => {
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text>
+                Favorites
+            </Text>
+        </SafeAreaView>
+    )
+}
+
+const styles = StyleSheet.create(
+    {
+        container:
+        {
+            flex: 1,
+            paddingTop: Platform.OS === 'android' ? 36 : 0,
+            padding: 10
+        }
+    }
+);
+
+export default Favorites;
