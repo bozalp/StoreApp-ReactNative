@@ -15,7 +15,7 @@ const MyTabs = () => {
         <Tab.Navigator>
             <Tab.Screen name="Home" component={Home} options={{
                 headerShown: false,
-                tabBarLabel: 'Anasayfa',
+                tabBarLabel: 'Home',
                 tabBarIcon: ({ color }) => (
                     <MaterialCommunityIcons name="home" color={color} size={24} />
                 ),
@@ -23,7 +23,7 @@ const MyTabs = () => {
             <Tab.Screen name="Categories" component={Categories}
                 options={{
                     headerShown: false,
-                    tabBarLabel: 'Kategoriler',
+                    tabBarLabel: 'Categories',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="shape" color={color} size={24} />
                     ),
@@ -31,7 +31,7 @@ const MyTabs = () => {
             <Tab.Screen name="ShoppingCart" component={ShoppingCart}
                 options={{
                     headerShown: false,
-                    tabBarLabel: 'Sepetim',
+                    tabBarLabel: 'Shopping Cart',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="shopping" color={color} size={24} />
                     ),
@@ -39,7 +39,7 @@ const MyTabs = () => {
             <Tab.Screen name="Favorites" component={Favorites}
                 options={{
                     headerShown: false,
-                    tabBarLabel: 'Beğendiklerim',
+                    tabBarLabel: 'Favorites',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="heart" color={color} size={24} />
                     ),

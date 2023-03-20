@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Rating, AirbnbRating } from 'react-native-ratings';
 
-const ProductBox = ({ products }) => {
+import RatingStars from './RatingStars';
+
+const ProductBox = ({ products, navigation }) => {
     const [isFavorite, setFavorite] = useState(false);
 
     function GetTitle(title) {
@@ -18,26 +19,19 @@ const ProductBox = ({ products }) => {
         setFavorite(fav => !fav);
     }
 
+    function GoToProductPage(productId) {
+        navigation.navigate('ProductPage', { productId });
+    }
+
     return (
-        <TouchableOpacity style={styles.container} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={() => GoToProductPage(products.id)}>
             <Image style={styles.product_image} source={{
                 uri: products.image
             }} />
             <Text>
                 {GetTitle(products.title)}
             </Text>
-            <View style={styles.rating}>
-                <Rating
-                    type='star'
-                    ratingCount={5}
-                    startingValue={products.rating.rate}
-                    imageSize={16}
-                    readonly
-                />
-                <Text style={{ marginLeft: 5 }}>
-                    ({products.rating.count})
-                </Text>
-            </View>
+            <RatingStars rate={products.rating.rate} count={products.rating.count} />
             <Text style={styles.price_text}>
                 ${products.price}
             </Text>
@@ -81,11 +75,6 @@ const styles = StyleSheet.create(
             height: 15,
             resizeMode: 'contain',
             position: 'absolute',
-        },
-        rating:
-        {
-            flexDirection: 'row',
-            paddingTop: 5,
         },
         price_text:
         {
