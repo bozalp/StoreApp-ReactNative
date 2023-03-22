@@ -4,6 +4,10 @@ import axios from 'axios';
 import RatingStars from './RatingStars';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { addToShoppingCart } from '../ReduxToolkit/shoppingCartReducer';
+import { addToFavorites, deleteFromFavorites } from '../ReduxToolkit/favoritesReducer';
+
 const productsURL = 'https://fakestoreapi.com/products/';
 
 const ProductPage = ({ route, navigation }) => {
@@ -13,11 +17,17 @@ const ProductPage = ({ route, navigation }) => {
     const [isLoading, setLoading] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
 
+    const shoppingCart = useSelector((state) => state.shoppingCarts);
+    const favorites = useSelector((state) => state.favorites);
+    const dispatch = useDispatch();
+
     const fetchProducts = async () => {
         try {
             const response = await axios.get(productsURL + productId.toString());
             setProducts(response.data);
             setLoading(true);
+            console.log(favorites);
+            IsFavorites(productId);
         }
         catch (error) {
             console.log(error);
@@ -29,7 +39,22 @@ const ProductPage = ({ route, navigation }) => {
     }, []);
 
     function AddToFavorite() {
+        !isFavorite ?
+            dispatch(addToFavorites(productId)) :
+            dispatch(deleteFromFavorites(productId));
         setFavorite(fav => !fav);
+    }
+
+    function IsFavorites(id) {
+        favorites.includes(id) ?
+            setFavorite(true)
+            :
+            setFavorite(false);
+    }
+
+    function AddToShoppingCart() {
+        console.log("product has been successfully added to the shopping cart");
+        dispatch(addToShoppingCart(productId));
     }
 
     return (
@@ -47,7 +72,7 @@ const ProductPage = ({ route, navigation }) => {
                     <Text style={styles.price_text}>
                         ${products.price}
                     </Text>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.add_to_cart_button}>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.add_to_cart_button} onPress={AddToShoppingCart}>
                         <Text style={{ color: 'white', fontSize: 20 }}>
                             Add to Cart
                         </Text>

@@ -1,9 +1,18 @@
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
+
+import { useSelector, useDispatch } from 'react-redux';
+
 const ShoppingCart = ({ navigation }) => {
+
+    const shoppingCart = useSelector((state) => state.shoppingCarts);
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>
                 Shopping Cart
+            </Text>
+            <Text>
+                {shoppingCart}
             </Text>
         </SafeAreaView>
     )

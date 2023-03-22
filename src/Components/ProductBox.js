@@ -1,12 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { useSelector, useDispatch } from 'react-redux';
 import RatingStars from './RatingStars';
+import { addToFavorites, deleteFromFavorites } from '../ReduxToolkit/favoritesReducer';
 
 const ProductBox = ({ products, navigation }) => {
     const [isFavorite, setFavorite] = useState(false);
+    const favorites = useSelector((state) => state.favorites);
+    const dispatch = useDispatch();
+    const [productId, setProductId] = useState(-1);
+
+    useEffect(() => {
+        setProductId(products.id);
+        IsFavorites(productId);
+    }, [])
 
     function GetTitle(title) {
         if (title.length > 20)
@@ -16,7 +26,17 @@ const ProductBox = ({ products, navigation }) => {
     }
 
     function AddToFavorite() {
+        !isFavorite ?
+            dispatch(addToFavorites(productId)) :
+            dispatch(deleteFromFavorites(productId));
         setFavorite(fav => !fav);
+    }
+
+    function IsFavorites(id) {
+        favorites.includes(id) ?
+            setFavorite(true)
+            :
+            setFavorite(false);
     }
 
     function GoToProductPage(productId) {
