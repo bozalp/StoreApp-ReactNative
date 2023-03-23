@@ -17,7 +17,7 @@ const ProductPage = ({ route, navigation }) => {
     const [isLoading, setLoading] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
 
-    const shoppingCart = useSelector((state) => state.shoppingCarts);
+    //const shoppingCart = useSelector((state) => state.shoppingCarts);
     const favorites = useSelector((state) => state.favorites);
     const dispatch = useDispatch();
 
@@ -26,7 +26,6 @@ const ProductPage = ({ route, navigation }) => {
             const response = await axios.get(productsURL + productId.toString());
             setProducts(response.data);
             setLoading(true);
-            console.log(favorites);
             IsFavorites(productId);
         }
         catch (error) {

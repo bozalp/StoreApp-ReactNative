@@ -13,8 +13,9 @@ const Favorites = ({ navigation }) => {
             </Text>
             <FlatList
                 data={favorites}
-                renderItem={({ item }) => <FavoritesBox productId={item} />}
+                renderItem={({ item }) => <FavoritesBox navigation={navigation} productId={item} />}
                 style={styles.list}
+                showsVerticalScrollIndicator={false}
             />
         </SafeAreaView>
     )

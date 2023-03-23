@@ -5,12 +5,15 @@ import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialIcons';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 const productsURL = 'https://fakestoreapi.com/products';
 
 const Home = ({ navigation }) => {
     const [products, setProducts] = useState(null);
     const [isLoading, setLoading] = useState(false);
     const [searchText, setSearchText] = useState('');
+    const favorites = useSelector((state) => state.favorites);
 
     const fetchProducts = async () => {
         try {
@@ -25,7 +28,7 @@ const Home = ({ navigation }) => {
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    },[]);
 
     const renderItem = ({ item }) => <ProductBox products={item} navigation={navigation} />
 

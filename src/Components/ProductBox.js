@@ -16,7 +16,7 @@ const ProductBox = ({ products, navigation }) => {
     useEffect(() => {
         setProductId(products.id);
         IsFavorites(productId);
-    }, [])
+    }, [favorites])
 
     function GetTitle(title) {
         if (title.length > 20)
