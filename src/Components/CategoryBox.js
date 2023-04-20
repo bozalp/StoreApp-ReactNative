@@ -18,11 +18,12 @@ const CategoryBox = ({ categoryTitle }) => {
 
     return (
         <TouchableOpacity activeOpacity={0.7} style={styles.container}>
-            <View style={[{ backgroundColor: '#' + randomColor() }, styles.image]}>
+            {/*<View style={[{ backgroundColor: '#' + randomColor() }, styles.image]}>
                 <Text style={styles.slice_title}>
                     {SliceTitle(categoryTitle)}
                 </Text>
-            </View>
+             </View>*/}
+            <View style={[{ backgroundColor: '#' + randomColor() }, styles.colored_area]} />
             <Text style={styles.category_title}>
                 {BeautifyTitle(categoryTitle)}
             </Text>
@@ -36,7 +37,7 @@ const styles = StyleSheet.create(
         {
             flex: 1,
             width: '100%',
-            minHeight: 100,
+            minHeight: 72,
             backgroundColor: 'white',
             borderWidth: 1,
             borderColor: '#dedede',
@@ -58,13 +59,24 @@ const styles = StyleSheet.create(
         category_title:
         {
             fontWeight: '700',
-            textAlignVertical: 'center'
+            textAlignVertical: 'center',
+            paddingLeft: 24,
         },
         slice_title:
         {
             fontWeight: '500',
             fontSize: 20,
-            color:'white'
+            color: 'white'
+        },
+        colored_area:
+        {
+            minHeight: 72,
+            width: 24,
+            borderBottomLeftRadius: 10,
+            borderTopLeftRadius: 10,
+            position: 'absolute',
+            left: 0,
+            top: 0,
         }
     }
 )

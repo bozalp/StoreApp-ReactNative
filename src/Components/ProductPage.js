@@ -152,7 +152,6 @@ const styles = StyleSheet.create(
             minHeight: 64,
             borderTopColor: '#dedede',
             borderTopWidth: 1,
-
         },
         add_to_cart_button:
         {

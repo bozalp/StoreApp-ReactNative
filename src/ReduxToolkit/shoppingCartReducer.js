@@ -10,19 +10,8 @@ export const shoppingCartSlice = createSlice({
             state.push(action.payload);
         },
         deleteFromShoppingCart: (state, action) => {
-            return state.filter((shop) => shop.id !== action.payload.id);
+          return state.filter((shop) => shop !== action.payload)
         },
-        /*completeTodo: (state, action) => {
-          return state.map((todo) => {
-            if (todo.id === action.payload.id) {
-              return {
-                ...todo,
-                completed: !todo.completed,
-              };
-            }
-            return todo;
-          });
-        },*/
     },
 });
 

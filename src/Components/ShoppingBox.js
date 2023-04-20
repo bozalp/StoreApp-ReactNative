@@ -5,15 +5,12 @@ import RatingStars from '../Components/RatingStars';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const productsURL = 'https://fakestoreapi.com/products/';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToFavorites, deleteFromFavorites } from '../ReduxToolkit/favoritesReducer';
-import { addToShoppingCart } from '../ReduxToolkit/shoppingCartReducer';
+import { deleteFromShoppingCart } from '../ReduxToolkit/shoppingCartReducer';
 
-const FavoritesBox = ({ navigation, productId }) => {
+const ShoppingBox = ({ navigation, productId }) => {
     const [products, setProducts] = useState(null);
     const [isLoading, setLoading] = useState(false);
-    const [isFavorite, setFavorite] = useState(false);
 
-    const favorites = useSelector((state) => state.favorites);
     const dispatch = useDispatch();
 
     const fetchProducts = async () => {
@@ -21,7 +18,6 @@ const FavoritesBox = ({ navigation, productId }) => {
             const response = await axios.get(productsURL + productId);
             setProducts(response.data);
             setLoading(true);
-            IsFavorites(productId);
         }
         catch (error) {
             console.log(error);
@@ -32,23 +28,9 @@ const FavoritesBox = ({ navigation, productId }) => {
         fetchProducts();
     }, []);
 
-    function AddToFavorite() {
-        !isFavorite ?
-            dispatch(addToFavorites(productId)) :
-            dispatch(deleteFromFavorites(productId));
-        setFavorite(fav => !fav);
-    }
-
-    function IsFavorites(id) {
-        favorites.includes(id) ?
-            setFavorite(true)
-            :
-            setFavorite(false);
-    }
-
-    function AddToShoppingCart() {
-        console.log("product has been successfully added to the shopping cart");
-        dispatch(addToShoppingCart(productId));
+    function DeleteToShoppingCart() {
+        console.log("product has been successfully removed to the shopping cart");
+        dispatch(deleteFromShoppingCart(productId));
     }
 
     function GoToProduct() {
@@ -64,9 +46,9 @@ const FavoritesBox = ({ navigation, productId }) => {
 
     return (
         <View>
-            <View style={styles.like_button}>
-                <TouchableOpacity activeOpacity={0.7} onPress={AddToFavorite}>
-                    <MaterialCommunityIcons name={isFavorite ? 'heart' : 'heart-outline'} color={isFavorite ? '#007aff' : '#999'} size={24} />
+            <View style={styles.trash_button}>
+                <TouchableOpacity activeOpacity={0.7} onPress={DeleteToShoppingCart}>
+                    <MaterialCommunityIcons name={'trash-can-outline'} color={'#007aff'} size={24} />
                 </TouchableOpacity>
             </View>
             {
@@ -87,13 +69,14 @@ const FavoritesBox = ({ navigation, productId }) => {
                                     ${products.price}
                                 </Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <TouchableOpacity activeOpacity={0.7} style={styles.add_to_cart_button} onPress={AddToShoppingCart}>
                                     <Text style={{ color: 'white' }}>
                                         Add to Cart
                                     </Text>
                                 </TouchableOpacity>
                             </View>
+                    */}
                         </View>
                     </TouchableOpacity>
             }
@@ -121,28 +104,18 @@ const styles = StyleSheet.create(
             resizeMode: 'center',
             marginRight: 20,
         },
-        title:
-        {
-            fontWeight: 'bold',
-            fontSize: 16,
-        },
         price_text:
         {
             fontSize: 18,
             color: '#007aff',
             fontWeight: '700',
         },
-        add_to_cart_button:
+        title:
         {
-            width: 160,
-            minHeight: 48,
-            borderRadius: 10,
-            backgroundColor: '#007aff',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 10
+            fontWeight: 'bold',
+            fontSize: 16,
         },
-        like_button:
+        trash_button:
         {
             width: 40,
             height: 40,
@@ -168,4 +141,4 @@ const styles = StyleSheet.create(
     }
 )
 
-export default FavoritesBox;
+export default ShoppingBox;
