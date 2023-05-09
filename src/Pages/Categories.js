@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import CategoryBox from '../Components/CategoryBox';
 import axios from 'axios';
 
-//const mens = require('../Images/0-stars.png');
 const categoriesUrl = 'https://fakestoreapi.com/products/categories';
 
 const Categories = ({ navigation }) => {

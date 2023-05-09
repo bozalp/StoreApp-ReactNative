@@ -2,30 +2,45 @@ import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, FlatList, To
 import { useSelector, useDispatch } from 'react-redux';
 
 import ShoppingBox from '../Components/ShoppingBox';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from "axios"
+const productsURL = 'https://fakestoreapi.com/products/';
 
 const ShoppingCart = ({ navigation }) => {
     const shoppingList = useSelector((state) => state.shoppingCarts);
+    const [isEmpty, setEmpty] = useState(true);
+    const [prices, setPrices] = useState(true);
+    const [totalPrice, setTotal] = useState(0)
 
     useEffect(() => {
-
-        FullnessControl();
+        FullnessControl(shoppingList);
+        fetchProducts();
     }, [shoppingList]);
 
-    function Total() {
-        console.log(shoppingList.length);
-        for (let i = 0; i < shoppingList.length; i++) {
-            console.log(">" + shoppingList[i]);
-            //serverdan veri çekip onun fiyat değerini almam gerek. burada sadece id aliyorum
+
+
+    const fetchProducts = async () => {
+        try {
+            let total = 0;
+            for (let i = 0; i < shoppingList.length; i++) {
+                const response = await axios.get(productsURL + shoppingList[i]);
+                setPrices(response.data);
+                total += response.data.price;
+            }
+            total = total.toFixed(2);
+            setTotal(total);
         }
-    }
+        catch (error) {
+            console.log(error);
+        }
+    };
 
     function FullnessControl(item) {
-        console.log(">>" + item.length);
-        if (shoppingList.length !== 0)
-            return <ShoppingBox navigation={navigation} productId={item} />
+        if (item.length !== 0) {
+            setEmpty(false);
+        }
         else
-            return <Text>Sepet Boş</Text>
+            setEmpty(true);
     }
 
     return (
@@ -33,24 +48,39 @@ const ShoppingCart = ({ navigation }) => {
             <Text style={styles.title}>
                 Shopping Cart
             </Text>
-            <View style={styles.complete_shopping_area}>
-                <Text style={styles.price_text}>
-                    total
-                </Text>
-                <TouchableOpacity activeOpacity={0.7} style={styles.add_to_cart_button} onPress={null}>
-                    <Text style={{ color: 'white', fontSize: 20 }}>
-                        Add to Cart
+            {
+                !isEmpty &&
+                <View style={styles.complete_shopping_area}>
+                    <View style={styles.price_text}>
+                        <Text style={{ fontSize: 16, }}>
+                            Cart Subtotal:&nbsp;
+                        </Text>
+                        <Text style={{ fontSize: 16, fontWeight: '700' }}>
+                            ${totalPrice}
+                        </Text>
+                    </View>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.add_to_cart_button} onPress={null}>
+                        <Text style={{ color: 'white', fontSize: 20 }}>
+                            Checkout
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            }
+            {
+                isEmpty ?
+                    <Text style={styles.empty_text}>
+                        Cart is empty
                     </Text>
-                </TouchableOpacity>
-            </View>
-            <FlatList
-                data={shoppingList}
-                renderItem={({ item }) =>
-                    <ShoppingBox navigation={navigation} productId={item} />
-                }
-                style={styles.list}
-                showsVerticalScrollIndicator={false}
-            />
+                    :
+                    <FlatList
+                        data={shoppingList}
+                        renderItem={({ item }) =>
+                            <ShoppingBox navigation={navigation} productId={item} />
+                        }
+                        style={styles.list}
+                        showsVerticalScrollIndicator={false}
+                    />
+            }
         </SafeAreaView>
     )
 }
@@ -70,6 +100,17 @@ const styles = StyleSheet.create(
             padding: 10,
             fontSize: 16
         },
+        empty_text:
+        {
+            fontSize: 18,
+            fontWeight: '700',
+            textAlign: 'center',
+            marginTop: 20,
+        },
+        price_text:
+        {
+            flexDirection: 'row',
+        },
         list:
         {
             flex: 1,
@@ -88,6 +129,7 @@ const styles = StyleSheet.create(
             minHeight: 64,
             borderTopColor: '#dedede',
             borderTopWidth: 1,
+
         },
         add_to_cart_button:
         {
