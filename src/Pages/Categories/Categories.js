@@ -1,7 +1,9 @@
 import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, StatusBar, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
-import CategoryBox from '../Components/CategoryBox';
+import CategoryBox from '../../Components/CategoryBox';
 import axios from 'axios';
+
+import styles from './Categories.style';
 
 const categoriesUrl = 'https://fakestoreapi.com/products/categories';
 
@@ -46,23 +48,5 @@ const Categories = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create(
-    {
-        container:
-        {
-            flex: 1,
-            backgroundColor: 'white',
-            paddingTop: StatusBar.currentHeight,
-            padding: 10
-        },
-        title:
-        {
-            fontWeight: 'bold',
-            padding: 10,
-            fontSize: 16
-        }
-    }
-);
 
 export default Categories;

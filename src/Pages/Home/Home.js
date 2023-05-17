@@ -2,10 +2,11 @@ import { StyleSheet, View, Text, SafeAreaView, StatusBar, TextInput, FlatList, A
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import ProductBox from '../Components/ProductBox';
+import ProductBox from '../../Components/ProductBox';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialIcons';
 
 import { useSelector, useDispatch } from 'react-redux';
+import styles from './Home.styles';
 
 const productsURL = 'https://fakestoreapi.com/products';
 
@@ -48,7 +49,7 @@ const Home = ({ navigation }) => {
                                 <View style={styles.header}>
                                     <Image
                                         style={styles.logo}
-                                        source={require('../../assets/favicon.png')}
+                                        source={require('../../../assets/store-logo.png')}
                                     />
                                     <TextInput
                                         placeholder="Search Product..."
@@ -59,11 +60,6 @@ const Home = ({ navigation }) => {
                                         <MaterialCommunityIcons name={'search'} color={'#007aff'} size={28} />
                                     </TouchableOpacity>
                                 </View>
-                                <View>
-                                    <Text>
-                                        Burada kategoriler sağa doğru kaydırılabilir olacak
-                                    </Text>
-                                </View>
                             </View>
                         }
                     />
@@ -71,49 +67,5 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create(
-    {
-        container:
-        {
-            flex: 1,
-            backgroundColor: 'white',
-            //paddingTop: Platform.OS === 'android' ? 36 : 0,
-            paddingTop: StatusBar.currentHeight,
-            padding: 10,
-        },
-        header:
-        {
-            flexDirection: 'row',
-            flex: 1,
-            padding: 7,
-            alignItems: 'center',
-        },
-        logo:
-        {
-            width: 40,
-            height: 40,
-            marginRight: 10,
-        },
-        textbox:
-        {
-            flex: 1,
-            height: 42,
-            borderWidth: 1,
-            borderRadius: 10,
-            borderColor: '#999',
-            padding: 5
-        },
-        search_button:
-        {
-            width: 42,
-            height: 42,
-            position: 'absolute',
-            right: 10,
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
-    }
-);
 
 export default Home;

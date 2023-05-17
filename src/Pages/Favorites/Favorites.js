@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import FavoritesBox from '../Components/FavoritesBox';
+import FavoritesBox from '../../Components/FavoritesBox';
 import { useEffect, useState } from 'react';
+import styles from './Favorites.style';
 
 const Favorites = ({ navigation }) => {
     const favorites = useSelector((state) => state.favorites);
@@ -13,7 +14,6 @@ const Favorites = ({ navigation }) => {
     }, [favorites]);
 
     function FullnessControl(item) {
-        // console.log(">>" + item.length);
         if (item.length !== 0)
             setEmpty(false);
         else
@@ -43,34 +43,5 @@ const Favorites = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create(
-    {
-        container:
-        {
-            flex: 1,
-            backgroundColor: 'white',
-            paddingTop: StatusBar.currentHeight,
-            padding: 10,
-        },
-        title:
-        {
-            fontWeight: 'bold',
-            padding: 10,
-            fontSize: 16
-        },
-        list:
-        {
-            flex: 1,
-        },
-        empty_text:
-        {
-            fontSize: 18,
-            fontWeight: '700',
-            textAlign: 'center',
-            marginTop: 20,
-        },
-    }
-);
 
 export default Favorites;
