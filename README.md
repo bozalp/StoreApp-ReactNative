@@ -10,6 +10,11 @@ Packages used<br>
 -Expo Vector Icons<br>
 -react-native-ratings<br>
 <br>
+
+https://github.com/bozalp/StoreApp-ReactNative/assets/33182788/66d3341c-0457-4457-8270-b5052595ff1c
+
+
+
 <div>
 <img src="https://github.com/bozalp/StoreApp-ReactNative/blob/main/src/Images/0.png" width="300" />
 <img src="https://github.com/bozalp/StoreApp-ReactNative/blob/main/src/Images/1.png" width="300" />
